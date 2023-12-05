@@ -24,10 +24,23 @@ const containsEscapeSequences = str => {
   return hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
 };
 
+router.post('/', (req, res) => {
+  console.log('req.body', req.body);
+  // const inputValue = req.body.input; // Get the input value from the request body
+
+  containsEscapeSequences('5'); // Validate the input value
+
+  // if (errorMessage !== '') {
+  //   res.status(400).send({ error: errorMessage }); // Send error response with validation message
+  // } else {
+  //   res.send({ message: 'Input is valid' }); // Send success response with confirmation message
+  // }
+});
+
 router.get('/', async (req, res) => {
   console.log('test');
   res.status(200).render('test', {
-    layout: 'public',
-    containsEscapeSequences
+    layout: 'public'
+    // containsEscapeSequences
   });
 });
