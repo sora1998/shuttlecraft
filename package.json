@@ -48,6 +48,7 @@
     "md5": "^2.3.0",
     "moment": "^2.29.4",
     "node-fetch": "^3.3.0",
+    "nodemon": "^3.0.2",
     "queue-promise": "^2.2.1",
     "rss-generator": "^0.0.3"
   },

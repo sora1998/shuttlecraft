@@ -30,7 +30,7 @@ import moment from 'moment';
 import { ActivityPub } from './lib/ActivityPub.js';
 import { ensureAccount } from './lib/account.js';
 
-import { UserProfileRouter, WebfingerRouter, inbox, outbox, admin, notes, publicFacing } from './routes/index.js';
+import { UserProfileRouter, WebfingerRouter, inbox, outbox, admin, notes, publicFacing, test } from './routes/index.js';
 
 // load process.env from .env file
 dotenv.config();
@@ -229,6 +229,7 @@ setExpressApp(app);
  * });
  */
 const asyncAuthorizer = (username, password, callback) => {
+  console.log('asyncAuthorizer');
   let isAuthorized = false;
   // Check if the provided password matches the hardcoded username
   const isPasswordAuthorized = username === USERNAME;
@@ -288,6 +289,7 @@ const basicUserAuth = basicAuth({
 });
 
 ensureAccount(USERNAME, DOMAIN).then(myaccount => {
+  console.log('ensureAccount resolved');
   const authWrapper = (req, res, next) => {
     if (req.cookies.token) {
       if (req.cookies.token === myaccount.apikey) {
@@ -313,6 +315,15 @@ ensureAccount(USERNAME, DOMAIN).then(myaccount => {
 
   // serve individual posts
   app.use('/m', cors(), notes);
+
+  app.use(
+    '/test',
+    cors({
+      credentials: true,
+      origin: true
+    }),
+    test
+  );
 
   // handle incoming requests
   app.use('/api/inbox', cors(), inbox);
