@@ -777,34 +777,3 @@ router.post('/boost', async (req, res) => {
   }
   writeBoosts(boosts);
 });
-
-router.get('/temp', async (req, res) => {
-  const to = req.query.to;
-  const inReplyTo = req.query.inReplyTo;
-  let op;
-  let actor;
-  let prev;
-  if (inReplyTo) {
-    op = await getActivity(inReplyTo);
-    const account = await fetchUser(op.attributedTo);
-    actor = account.actor;
-  }
-
-  if (req.query.edit) {
-    console.log('COMPOSING EDIT', req.query.edit);
-    prev = await getNote(req.query.edit);
-    // console.log("ORIGINAL", original);
-  }
-
-  res.status(200).render('partials/composer', {
-    url: '/post',
-    to,
-    inReplyTo,
-    actor,
-    originalPost: op, // original post being replied to
-    prev, // previous version we posted, now editing
-    me: req.app.get('account').actor,
-    prefs: getPrefs(),
-    layout: 'private'
-  });
-});

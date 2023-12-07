@@ -30,7 +30,16 @@ import moment from 'moment';
 import { ActivityPub } from './lib/ActivityPub.js';
 import { ensureAccount } from './lib/account.js';
 
-import { UserProfileRouter, WebfingerRouter, inbox, outbox, admin, notes, publicFacing, test } from './routes/index.js';
+import {
+  UserProfileRouter,
+  WebfingerRouter,
+  inbox,
+  outbox,
+  admin,
+  notes,
+  publicFacing,
+  accountHandler
+} from './routes/index.js';
 
 // load process.env from .env file
 dotenv.config();
@@ -177,7 +186,7 @@ const hbs = create({
 
 const setExpressApp = app => {
   app.set('domain', DOMAIN);
-  app.set('port', process.env.PORT || PORT || 3000);
+  app.set('port', process.env.PORT || PORT || 3000 || 3001 || 3002);
   app.set('port-https', process.env.PORT_HTTPS || 8443);
   app.engine('handlebars', hbs.engine);
   app.set('views', PATH_TO_TEMPLATES);
@@ -317,12 +326,12 @@ ensureAccount(USERNAME, DOMAIN).then(myaccount => {
   app.use('/m', cors(), notes);
 
   app.use(
-    '/test',
+    '/account',
     cors({
       credentials: true,
       origin: true
     }),
-    test
+    accountHandler
   );
 
   // handle incoming requests

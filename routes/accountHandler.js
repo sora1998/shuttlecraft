@@ -3,7 +3,7 @@ import { promises as fsPromises } from 'fs';
 
 export const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
   console.log('req.body', req.body);
 
   // Your data to write to the .env file
@@ -32,10 +32,15 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/', async (req, res) => {
+router.get('/create', async (req, res) => {
   console.log('test');
-  res.status(200).render('test', {
+  res.status(200).render('createAccount', {
     layout: 'public'
     // containsEscapeSequences
   });
+});
+
+router.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/account/create');
 });
