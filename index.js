@@ -30,22 +30,13 @@ import moment from 'moment';
 import { ActivityPub } from './lib/ActivityPub.js';
 import { ensureAccount } from './lib/account.js';
 
-import {
-  UserProfileRouter,
-  WebfingerRouter,
-  inbox,
-  outbox,
-  admin,
-  notes,
-  publicFacing,
-  accountHandler
-} from './routes/index.js';
+import { UserProfileRouter, WebfingerRouter, inbox, outbox, admin, notes, publicFacing } from './routes/index.js';
 
 // load process.env from .env file
 dotenv.config();
-const { USERNAME, PASS, DOMAIN, PORT } = process.env;
+const { USER_NAME, PASS, DOMAIN, PORT } = process.env;
 
-const envVariables = ['USERNAME', 'PASS', 'DOMAIN'];
+const envVariables = ['USER_NAME', 'PASS', 'DOMAIN'];
 const PATH_TO_TEMPLATES = './design';
 
 /**
@@ -186,7 +177,7 @@ const hbs = create({
 
 const setExpressApp = app => {
   app.set('domain', DOMAIN);
-  app.set('port', process.env.PORT || PORT || 3000 || 3001 || 3002);
+  app.set('port', process.env.PORT || PORT || 3000);
   app.set('port-https', process.env.PORT_HTTPS || 8443);
   app.engine('handlebars', hbs.engine);
   app.set('views', PATH_TO_TEMPLATES);
@@ -238,10 +229,9 @@ setExpressApp(app);
  * });
  */
 const asyncAuthorizer = (username, password, callback) => {
-  console.log('asyncAuthorizer');
   let isAuthorized = false;
   // Check if the provided password matches the hardcoded username
-  const isPasswordAuthorized = username === USERNAME;
+  const isPasswordAuthorized = username === USER_NAME;
 
   // Check if the provided username matches the hardcoded password
   const isUsernameAuthorized = password === PASS;
@@ -297,8 +287,7 @@ const basicUserAuth = basicAuth({
   challenge: true
 });
 
-ensureAccount(USERNAME, DOMAIN).then(myaccount => {
-  console.log('ensureAccount resolved');
+ensureAccount(USER_NAME, DOMAIN).then(myaccount => {
   const authWrapper = (req, res, next) => {
     if (req.cookies.token) {
       if (req.cookies.token === myaccount.apikey) {
@@ -324,15 +313,6 @@ ensureAccount(USERNAME, DOMAIN).then(myaccount => {
 
   // serve individual posts
   app.use('/m', cors(), notes);
-
-  app.use(
-    '/account',
-    cors({
-      credentials: true,
-      origin: true
-    }),
-    accountHandler
-  );
 
   // handle incoming requests
   app.use('/api/inbox', cors(), inbox);
