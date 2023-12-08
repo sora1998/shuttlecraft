@@ -8,7 +8,18 @@
             {{#if feed}}
                 {{> profileHeader actor=feed nobio=true}}
             {{/if}}
-
+            <article class="activity-post">
+                            {{!-- {{#if boost}} --}}
+                <div class="boost-notice">
+                    🚀 Boosted by 
+                <a href="/private/feeds/jay">jayy</a>
+                </div>
+                                {{!-- {{> note note=note}} --}}
+                            {{!-- {{else}}
+                                {{> note note=note hidebyline=true}}
+                            {{/if}} --}}
+                {{> note note=note}}
+            </article>
             {{#if activitystream}}
                 {{#each activitystream}}
                     {{#with this}}
