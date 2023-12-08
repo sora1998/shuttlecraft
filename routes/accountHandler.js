@@ -7,10 +7,9 @@ router.post('/create', (req, res) => {
   console.log('req.body', req.body);
 
   // Your data to write to the .env file
-  const envData = `
-  USERNAME=${req.body.username}
-  PASS=${req.body.password}
-  DOMAIN=${req.body.domain}
+  const envData = `USER_NAME=${req.body.username}
+PASS=${req.body.password}
+DOMAIN=${req.body.domain}
   `;
 
   // Path to your .env file
@@ -30,6 +29,7 @@ router.post('/create', (req, res) => {
     .catch(error => {
       console.error('Error writing to .env file:', error);
     });
+  res.redirect('/private');
 });
 
 router.get('/create', async (req, res) => {

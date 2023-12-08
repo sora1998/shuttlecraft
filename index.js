@@ -30,11 +30,21 @@ import moment from 'moment';
 import { ActivityPub } from './lib/ActivityPub.js';
 import { ensureAccount } from './lib/account.js';
 
-import { UserProfileRouter, WebfingerRouter, inbox, outbox, admin, notes, publicFacing } from './routes/index.js';
+import {
+  UserProfileRouter,
+  WebfingerRouter,
+  inbox,
+  outbox,
+  admin,
+  notes,
+  publicFacing,
+  accountHandler
+} from './routes/index.js';
 
 // load process.env from .env file
 dotenv.config();
 const { USER_NAME, PASS, DOMAIN, PORT } = process.env;
+console.log('USER_NAME', USER_NAME);
 
 const envVariables = ['USER_NAME', 'PASS', 'DOMAIN'];
 const PATH_TO_TEMPLATES = './design';
@@ -319,6 +329,15 @@ ensureAccount(USER_NAME, DOMAIN).then(myaccount => {
   app.use('/api/outbox', cors(), outbox);
 
   app.use(
+    '/account',
+    cors({
+      credentials: true,
+      origin: true
+    }),
+    accountHandler
+  );
+
+  app.use(
     '/private',
     cors({
       credentials: true,
@@ -327,6 +346,7 @@ ensureAccount(USER_NAME, DOMAIN).then(myaccount => {
     authWrapper,
     admin
   );
+
   app.use('/', cors(), publicFacing);
   app.use('/', express.static('public/'));
 
