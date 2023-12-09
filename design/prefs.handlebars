@@ -148,6 +148,24 @@
                 <textarea id="bio" name="bio">{{#unless me.bio}}{{else}}{{me.bio}}{{/unless}}</textarea>
             </div>
             <div class="form-group">
+                <label for="post preferences">Post Settings</label>
+                <div>
+                    <input type="checkbox" id="canReply" name="canReply"
+                        {{#isEq me.canReply "true"}} checked {{/isEq}}  />
+                    <label for="canReply">Allow Reply</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="canBoost" name="canBoost"
+                        {{#isEq me.canBoost "true"}} checked {{/isEq}}  />
+                    <label for="canBoost">Allow Boost</label>
+                </div>
+                <div>
+                      <input type="checkbox" id="canFave" name="canFave"
+                        {{#isEq me.canFave "true"}} checked {{/isEq}}  />
+                    <label for="canFave">Allow Fave</label>
+                </div>
+            </div>
+            <div class="form-group">
                 <input type="radio" id="avatarInput1" name="avatarInput" value="https://raw.githubusercontent.com/sora1998/avatar_repo/main/avatar1.png">
                 <label for="avatar1"><img src="https://raw.githubusercontent.com/sora1998/avatar_repo/main/avatar1.png" alt="Avatar 1" width="40px" height="40px"/></label>
                 <input type="radio" id="avatarInput2" name="avatarInput" value="https://raw.githubusercontent.com/sora1998/avatar_repo/main/avatar2.png">
@@ -171,7 +189,7 @@
                 <input type="radio" id="avatarInput11" name="avatarInput" value="https://raw.githubusercontent.com/sora1998/avatar_repo/main/avatar11.png">
                 <label for="avatar11"><img src="https://raw.githubusercontent.com/sora1998/avatar_repo/main/avatar11.png" alt="Avatar 11" width="40px" height="40px"/></label>
                 <input type="radio" id="avatarInput12" name="avatarInput" value="https://raw.githubusercontent.com/sora1998/avatar_repo/main/avatar12.png">
-                <label for="avatar11"><img src="https://raw.githubusercontent.com/sora1998/avatar_repo/main/avatar12.png" alt="Avatar 12" width="40px" height="40px"/></label>
+                <label for="avatar12"><img src="https://raw.githubusercontent.com/sora1998/avatar_repo/main/avatar12.png" alt="Avatar 12" width="40px" height="40px"/></label>
             </div>
             <button type="submit" class="update-button">Update Account Profile</button>
 

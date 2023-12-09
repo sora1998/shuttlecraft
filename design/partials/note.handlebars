@@ -1,6 +1,16 @@
         {{#unless hidebyline}}
         {{> byline actor=actor}}
         {{/unless}}
+
+        {{@root.me.id}}
+        {{log "canReply value1: " actor.canReply}}
+        {{log "rootmeid: " @root.me.id}}
+        {{log "actorid: " actor.id}}
+        {{log "canReply value2: " @root.me.canReply}}
+
+        {{@root.me.canReply}}
+        {{actor.id}}        
+
         {{#if note.summary}}
         <div class="content content_warning">
             <span>⚠️ {{note.summary}}</span>
@@ -28,15 +38,21 @@
             {{/each}}
             <footer>
                 <div class="tools">
+                    {{!#isEq actor.canReply "true"}}
                     <button onclick='return app.replyTo("{{note.id}}","{{{getUsername actor.id}}}")'>{{@root.prefs.icons.reply}}</button>
+                    {{!/isEq}}
+                    {{!#isEq actor.canBoost "true"}}
                     <button class="booster {{#if note.isBoosted}}active{{/if}}" onclick='return app.toggleBoost(this, "{{note.id}}")'>
                         <span class="active">{{@root.prefs.icons.boostActive}}</span>
                         <span class="inactive">{{@root.prefs.icons.boostInactive}}</span>
                     </button>
+                    {{!/isEq}}
+                    {{!#isEq actor.canFave "true"}}
                     <button class="like {{#if note.isLiked}}active{{/if}}" onclick='return app.toggleLike(this, "{{note.id}}")'>
                         <span class="active">{{@root.prefs.icons.faveActive}}</span>
                         <span class="inactive">{{@root.prefs.icons.faveInactive}}</span>
                     </button>
+                    {{!/isEq}}
                     {{#isEq note.attributedTo @root.me.id}}
                     <button onclick='return app.editPost("{{../note.id}}")'>
                         <span>✏️</span>

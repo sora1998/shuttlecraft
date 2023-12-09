@@ -358,6 +358,7 @@ router.post('/post', async (req, res) => {
       actor: req.app.get('account').actor,
       layout: 'activity'
     });
+    console.log('actor from note: ', req.app.get('account').actor);
   }
 });
 
@@ -535,11 +536,15 @@ router.post('/prefs', (req, res) => {
 router.post('/prefsAccount', (req, res) => {
   // lget current prefs.
   const updates = req.body;
+  const username = updates.username;
   const bio = updates.bio;
   const img = updates.avatarInput;
+  const canReply = typeof updates.canReply !== 'undefined' ? 'true' : 'false';
+  const canBoost = typeof updates.canBoost !== 'undefined' ? 'true' : 'false';
+  const canFave = typeof updates.canFave !== 'undefined' ? 'true' : 'false';
   console.log('me ', ActivityPub.actor.name);
   console.log('GOT ACCOUNT UPDATES', updates);
-  updateAccount(updates.username, DOMAIN, bio, img).then(myaccount => {
+  updateAccount(username, DOMAIN, bio, img, canReply, canBoost, canFave).then(myaccount => {
     // set the server to use the main account as its primary actor
     ActivityPub.account = myaccount;
     // app.set('account', myaccount);
