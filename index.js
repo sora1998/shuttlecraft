@@ -150,6 +150,9 @@ const hbs = create({
      * @returns {string} - The username.
      */
     getUsername: user => {
+      if (user === undefined) {
+        user = `https://${DOMAIN}/u/${USER_NAME}`;
+      }
       return ActivityPub.getUsername(user);
     },
 
