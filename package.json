@@ -44,6 +44,7 @@
     "express-handlebars": "^6.0.6",
     "glob": "^8.0.3",
     "husky": "^8.0.3",
+    "jsdom": "^23.0.1",
     "markdown-it": "^13.0.1",
     "md5": "^2.3.0",
     "moment": "^2.29.4",
@@ -55,6 +56,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
+    "@testing-library/dom": "^9.3.3",
     "babel-jest": "^29.7.0",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
